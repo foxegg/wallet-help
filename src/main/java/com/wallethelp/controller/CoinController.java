@@ -1,0 +1,127 @@
+package com.wallethelp.controller;
+
+import android.util.Log;
+
+import com.wallethelp.domain.Coin;
+import com.wallethelp.domain.CoinPrice;
+import com.wallethelp.domain.CoinReturnObject;
+import com.wallethelp.domain.EthErc20ReturnList;
+import com.wallethelp.service.DataService;
+import com.wallethelp.utils.HttpResponseListener;
+import com.wallethelp.utils.ReturnUtils;
+import com.wallethelp.utils.Utils;
+
+public class CoinController {
+	private static DataService contractService;
+	static {
+		contractService = new DataService();
+	}
+
+	/**
+	 * 获取余额
+	 * @param coinType(币简称 定义在Utils.CoinTypes)
+	 * @param address(账户公钥)
+	 * @param contractaddress(合约地址)
+	 * @param httpListener
+	 * @param <T>
+	 */
+	public static <T> void getBalance(String coinType, String address, String contractaddress, HttpResponseListener<T> httpListener) {
+		if (coinType != null && coinType.length() > 0) {
+			if (Utils.CoinTypes.BTC.equals(coinType)) {
+				contractService.btcGetBalance(address, httpListener);
+			} else if (Utils.CoinTypes.ETH.equals(coinType)) {
+				contractService.ethGetBalance(address, contractaddress, httpListener);
+			} else if (Utils.CoinTypes.BCH.equals(coinType)) {
+				contractService.bchGetBalance(address, httpListener);
+			}
+		}else{
+			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+		}
+	}
+
+	/**
+	 * 获取交易记录
+	 * @param coinType(币简称 定义在Utils.CoinTypes)
+	 * @param address(账户公钥)
+	 * @param contractaddress(合约地址)
+	 * @param page(大于0)
+	 * @param offset(1-50)
+	 * @param httpListener(结果反馈监听)
+	 * @param <T>
+	 */
+	public static <T>  void getTxlist(String coinType, String address, String contractaddress, int page, int offset, HttpResponseListener<T> httpListener) {
+		if (page<1 || offset > 50 || offset < 1) {
+			ReturnUtils.returnInfo(false, "page从1开始,offset取值范围1到50", httpListener);
+		}
+		if (coinType != null && coinType.length() > 0) {
+			if (Utils.CoinTypes.BTC.equals(coinType)) {
+				contractService.btcGetTxlist(address, page, offset, httpListener);
+			} else if (Utils.CoinTypes.ETH.equals(coinType)) {
+				contractService.ethGetTxlist(address, contractaddress, page, offset, httpListener);
+			} else if (Utils.CoinTypes.BCH.equals(coinType)) {
+				contractService.bchGetTxlist(address, page, offset, httpListener);
+			}
+		}else{
+			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+		}
+	}
+
+	/**
+	 * 获取未消费记录
+	 * @param coinType(btc,bth)
+	 * @param address
+	 * @param page(大于0)
+	 * @param offset(1-50)
+	 * @param httpListener(结果反馈监听)
+	 * @param <T>
+	 */
+	public static <T> void getUnspent(String coinType, String address, int page, int offset, HttpResponseListener<T> httpListener) {
+		if (page<1 || offset > 50 || offset < 1) {
+			ReturnUtils.returnInfo(false, "page从1开始,offset取值范围1到50", httpListener);
+		}
+		if (coinType != null && coinType.length() > 0) {
+			if (Utils.CoinTypes.BTC.equals(coinType)) {
+				contractService.btcGetUnspent(address, page, offset, httpListener);
+			} else if (Utils.CoinTypes.BCH.equals(coinType)) {
+				contractService.bchGetUnspent(address, page, offset, httpListener);
+			}
+		}else{
+			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+		}
+	}
+
+	/**
+	 * 获取GasPrice
+	 * @param httpListener(结果反馈监听)
+	 * @param <T>
+	 */
+	public static <T> void getGasPrice(HttpResponseListener<T> httpListener) {
+		contractService.getGasPrice(httpListener);
+	}
+
+	public static <T> void getTransactionByHash(String coinType, String hash, HttpResponseListener<T> httpListener) {
+		if (coinType != null && coinType.length() > 0) {
+			if (Utils.CoinTypes.ETH.equals(coinType)) {
+				contractService.getEthTransactionByHash(hash, httpListener);
+			} else if (Utils.CoinTypes.BTC.equals(coinType)) {
+				contractService.getBtcTransactionByHash( hash, httpListener);
+			}
+		}else{
+			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+		}
+
+	}
+
+	/**
+	 * 查询代币
+	 * @param nameOrSymbol
+	 * @param httpListener
+	 */
+	public static void getErc20Coins(String nameOrSymbol, HttpResponseListener<EthErc20ReturnList> httpListener) {
+		contractService.getErc20Coins(nameOrSymbol, httpListener);
+	}
+
+	public static void getCoinPriceBySymbol(String symbol, HttpResponseListener<CoinReturnObject> httpListener) {
+		contractService.getCoinPriceBySymbol(symbol, httpListener);
+	}
+}
