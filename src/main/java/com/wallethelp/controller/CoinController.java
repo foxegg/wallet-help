@@ -121,6 +121,22 @@ public class CoinController {
 		contractService.getErc20Coins(nameOrSymbol, httpListener);
 	}
 
+	/**
+	 *通过名称查询内容 名称:"+name+"简称:"+symbol+"市值:"+marketCap+"价格:"+price+"流通供给:"+circulatingSupply+"24小时交易量:"+volume24h
+	 *                +"1小时涨跌幅:"+increase1h+"24小时涨跌幅:"+increase24h+"7小时涨跌幅:"+increase7d
+	 * @param name
+	 * @param httpListener
+	 */
+	public static void getCoinPriceByName(String name, HttpResponseListener<CoinReturnObject> httpListener) {
+		contractService.getCoinPriceByName(name, httpListener);
+	}
+
+	/**
+	 *通过简称查询内容 名称:"+name+"简称:"+symbol+"市值:"+marketCap+"价格:"+price+"流通供给:"+circulatingSupply+"24小时交易量:"+volume24h
+	 *                +"1小时涨跌幅:"+increase1h+"24小时涨跌幅:"+increase24h+"7小时涨跌幅:"+increase7d
+	 * @param symbol
+	 * @param httpListener
+	 */
 	public static void getCoinPriceBySymbol(String symbol, HttpResponseListener<CoinReturnObject> httpListener) {
 		contractService.getCoinPriceBySymbol(symbol, httpListener);
 	}
