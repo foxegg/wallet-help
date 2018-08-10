@@ -1,0 +1,58 @@
+package com.wallethelp.domain;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class CoinExchange {
+    public double pkrExchange;
+    public double arsExchange;
+    public double ronExchange;
+    public double myrExchange;
+    public double inrExchange;
+    public double jpyExchange;
+    public double czkExchange;
+    public double brlExchange;
+    public double btcExchange;
+    public double sekExchange;
+    public double sgdExchange;
+    public double aedExchange;
+    public double tryExchange;
+    public double usdExchange;
+    public double audExchange;
+    public double chfExchange;
+    public double murExchange;
+    public double zarExchange;
+    public double ngnExchange;
+    public double cnyExchange;
+    public double penExchange;
+    public double hrkExchange;
+    public double clpExchange;
+    public double xrpExchange;
+    public double eurExchange;
+    public double hufExchange;
+    public double vndExchange;
+    public double nokExchange;
+    public double rubExchange;
+    public double mxnExchange;
+    public double plnExchange;
+    public double phpExchange;
+    public double bobExchange;
+    public double hkdExchange;
+    public double copExchange;
+    public double iskExchange;
+    public double bchExchange;
+    public double twdExchange;
+    public double uahExchange;
+    public double idrExchange;
+    public double krwExchange;
+    public double bgnExchange;
+    public double thbExchange;
+    public double ltcExchange; 
+    public double ilsExchange;
+    public double gbpExchange;
+    public double nzdExchange;
+    public double ethExchange;
+    public double dkkExchange;
+    public double cadExchange;
+}

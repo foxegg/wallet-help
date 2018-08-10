@@ -3,6 +3,7 @@ package com.wallethelp.controller;
 import android.util.Log;
 
 import com.wallethelp.domain.Coin;
+import com.wallethelp.domain.CoinExchangeObject;
 import com.wallethelp.domain.CoinPrice;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
@@ -139,5 +140,13 @@ public class CoinController {
 	 */
 	public static void getCoinPriceBySymbol(String symbol, HttpResponseListener<CoinReturnObject> httpListener) {
 		contractService.getCoinPriceBySymbol(symbol, httpListener);
+	}
+
+	/**
+	 * 获取汇率
+	 * @param httpListener
+	 */
+	public static void getCoinExchange(HttpResponseListener<CoinExchangeObject> httpListener) {
+		contractService.getCoinExchange(httpListener);
 	}
 }

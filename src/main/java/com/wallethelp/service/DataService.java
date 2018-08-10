@@ -1,5 +1,6 @@
 package com.wallethelp.service;
 
+import com.wallethelp.domain.CoinExchangeObject;
 import com.wallethelp.domain.CoinPrice;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
@@ -184,4 +185,13 @@ public class DataService {
 		String urlStr = Utils.ACUTEANGLE_URI+ "/get_coinprice_by_name?name=" +name.replace(" ", "-");
 		Utils.instance.getHttpsInfo(urlStr, listener);
 	}
+
+	/**
+	 * 获取汇率
+	 * @param listener
+	 */
+    public void getCoinExchange(HttpResponseListener<CoinExchangeObject> listener) {
+		String urlStr = Utils.ACUTEANGLE_URI+ "/get_coinprice_exchange";
+		Utils.instance.getHttpsInfo(urlStr, listener);
+    }
 }
