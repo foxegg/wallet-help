@@ -181,7 +181,7 @@ public class DataService {
 	 * @param listener
 	 */
 	public void getCoinPriceByName(String name, HttpResponseListener<CoinReturnObject> listener) {
-		String urlStr = Utils.ACUTEANGLE_URI+ "/get_coinprice_by_name?name=" +name;
+		String urlStr = Utils.ACUTEANGLE_URI+ "/get_coinprice_by_name?name=" +name.replace(" ", "-");
 		Utils.instance.getHttpsInfo(urlStr, listener);
 	}
 }
