@@ -1,11 +1,23 @@
 package com.wallethelp.service;
 
+import android.util.Log;
+
+import com.wallethelp.domain.BtcReturn;
 import com.wallethelp.domain.CoinExchangeObject;
 import com.wallethelp.domain.CoinPrice;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
+import com.wallethelp.domain.SelfObjectReturn;
 import com.wallethelp.utils.HttpResponseListener;
+import com.wallethelp.utils.ReturnUtils;
 import com.wallethelp.utils.Utils;
+import com.yanzhenjie.nohttp.rest.OnResponseListener;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 
 public class DataService {
 	//*************以太方************************************************************************************************
@@ -194,4 +206,23 @@ public class DataService {
 		String urlStr = Utils.ACUTEANGLE_URI+ "/get_coinprice_exchange";
 		Utils.instance.getHttpsInfo(urlStr, listener);
     }
+
+	public void getRawhex(String hash, HttpResponseListener<String> listener) {
+		String urlStr = Utils.BTC_RAWHEX_URL+ "/"+hash+".rawhex";
+
+		new Thread(){
+			@Override
+			public void run() {
+				super.run();
+				Document doc = null;
+				try {
+					doc = Jsoup.connect(urlStr).timeout(5000).userAgent("Mozilla").maxBodySize(0).get();
+					Elements elements = doc.getElementsByTag("body");
+					ReturnUtils.returnInfo(true, elements.get(0).html(), listener);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+	}
 }

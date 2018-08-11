@@ -40,6 +40,7 @@ public class Utils {
     //比特币api
     public static final String BTC_URL = "https://chain.api.btc.com/v3";
 
+    public static final String BTC_RAWHEX_URL = "https://btc.com";
     //以太坊官方api
     public static final String ETH_URL = "http://api.etherscan.io/api";
     //public static final String ETH_APIKEY = "1W7EUDWQP2AVUEGRS8HACSEHQ2JDAAJP8R";
