@@ -1,19 +1,12 @@
 package com.wallethelp.controller;
 
-import android.util.Log;
-
-import com.wallethelp.domain.BtcReturn;
-import com.wallethelp.domain.Coin;
 import com.wallethelp.domain.CoinExchangeObject;
-import com.wallethelp.domain.CoinPrice;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
-import com.wallethelp.domain.SelfObjectReturn;
 import com.wallethelp.service.DataService;
 import com.wallethelp.utils.HttpResponseListener;
 import com.wallethelp.utils.ReturnUtils;
 import com.wallethelp.utils.Utils;
-import com.yanzhenjie.nohttp.rest.OnResponseListener;
 
 public class CoinController {
 	private static DataService contractService;

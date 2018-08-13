@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,8 +83,9 @@ public class Utils {
                     e.printStackTrace();
                 }
             }
+            RequestManager.lastRequestTime = new Date().getTime();
             try {
-                Document doc = Jsoup.connect(urlStr).timeout(5000).userAgent("Mozilla").maxBodySize(0).get();
+                Document doc = Jsoup.connect(urlStr).timeout(5000).userAgent("Mozilla").ignoreContentType(true).maxBodySize(0).get();
                 Elements elements = doc.getElementsByTag("body");
                 Gson gson = new Gson();
                 ReturnUtils.returnInfo(true, toJson?gson.fromJson(elements.get(0).html(), listener.getTClass()):(T)elements.get(0).html(), listener);

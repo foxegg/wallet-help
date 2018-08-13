@@ -1,28 +1,11 @@
 package com.wallethelp.service;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.wallethelp.domain.BtcReturn;
 import com.wallethelp.domain.CoinExchangeObject;
-import com.wallethelp.domain.CoinPrice;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
-import com.wallethelp.domain.SelfObjectReturn;
 import com.wallethelp.utils.HttpResponseListener;
-import com.wallethelp.utils.JavaBeanRequest;
-import com.wallethelp.utils.RequestManager;
-import com.wallethelp.utils.ReturnUtils;
 import com.wallethelp.utils.Utils;
-import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.rest.OnResponseListener;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

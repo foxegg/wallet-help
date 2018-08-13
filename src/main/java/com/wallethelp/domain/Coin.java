@@ -1,7 +1,5 @@
 package com.wallethelp.domain;
 
-import java.util.Objects;
-
 public class Coin {
     //{精度:decimal, 名称:name, 符号:symbol, 发行总量:totalSupply}
     public String token;

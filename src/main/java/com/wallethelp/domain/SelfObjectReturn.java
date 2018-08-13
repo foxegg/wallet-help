@@ -1,7 +1,5 @@
 package com.wallethelp.domain;
 
-import java.util.List;
-
 public class SelfObjectReturn {
     public int status;
     public String message;

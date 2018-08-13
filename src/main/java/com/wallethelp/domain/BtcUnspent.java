@@ -1,7 +1,5 @@
 package com.wallethelp.domain;
 
-import java.util.List;
-
 public class BtcUnspent {
     public String tx_hash;
     public String tx_output_n;
