@@ -39,7 +39,7 @@ public class CoinController {
 				contractService.bchGetBalance(address, httpListener);
 			}
 		}else{
-			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+			ReturnUtils.returnError(false, "参数错误", httpListener);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class CoinController {
 	 */
 	public static <T>  void getTxlist(String coinType, String address, String contractaddress, int page, int offset, HttpResponseListener<T> httpListener) {
 		if (page<1 || offset > 50 || offset < 1) {
-			ReturnUtils.returnInfo(false, "page从1开始,offset取值范围1到50", httpListener);
+			ReturnUtils.returnError(false, "page从1开始,offset取值范围1到50", httpListener);
 		}
 		if (coinType != null && coinType.length() > 0) {
 			if (Utils.CoinTypes.BTC.equals(coinType)) {
@@ -66,7 +66,7 @@ public class CoinController {
 				contractService.bchGetTxlist(address, page, offset, httpListener);
 			}
 		}else{
-			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+			ReturnUtils.returnError(false, "参数错误", httpListener);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class CoinController {
 	 */
 	public static <T> void getUnspent(String coinType, String address, int page, int offset, HttpResponseListener<T> httpListener) {
 		if (page<1 || offset > 50 || offset < 1) {
-			ReturnUtils.returnInfo(false, "page从1开始,offset取值范围1到50", httpListener);
+			ReturnUtils.returnError(false, "page从1开始,offset取值范围1到50", httpListener);
 		}
 		if (coinType != null && coinType.length() > 0) {
 			if (Utils.CoinTypes.BTC.equals(coinType)) {
@@ -90,7 +90,7 @@ public class CoinController {
 				contractService.bchGetUnspent(address, page, offset, httpListener);
 			}
 		}else{
-			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+			ReturnUtils.returnError(false, "参数错误", httpListener);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class CoinController {
 				contractService.getBtcTransactionByHash( hash, httpListener);
 			}
 		}else{
-			ReturnUtils.returnInfo(false, "参数错误", httpListener);
+			ReturnUtils.returnError(false, "参数错误", httpListener);
 		}
 
 	}
@@ -159,5 +159,23 @@ public class CoinController {
 	 */
 	public static void getRawhex(String hash, HttpResponseListener<String> httpListener) {
 		contractService.getRawhex(hash, httpListener);
+	}
+
+	/**
+	 * 广播比特币交易
+	 * @param rawhex
+	 * @param httpListener
+	 */
+	public static void btcTxPublish(String rawhex, HttpResponseListener<String> httpListener) {
+		contractService.btcTxPublish(rawhex, httpListener);
+	}
+
+	/**
+	 * 广播以太坊交易
+	 * @param hex
+	 * @param httpListener
+	 */
+	public static void ethTxPublish(String hex, HttpResponseListener<String> httpListener) {
+		contractService.ethTxPublish(hex, httpListener);
 	}
 }

@@ -1,12 +1,22 @@
 package com.wallethelp.utils;
 
+import com.google.gson.Gson;
+import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -63,10 +73,47 @@ public class Utils {
     }
 
     /**
-     * 获取aac，eth币个数
+     * 发送get请求
+     */
+    public <T> void getHttpsInfoFromJsoup(boolean toJson, String urlStr, HttpResponseListener<T> listener) {
+        new Thread(()->{
+            while ((new Date().getTime()- RequestManager.lastRequestTime)<RequestManager.MIN_SNAP){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            try {
+                Document doc = Jsoup.connect(urlStr).timeout(5000).userAgent("Mozilla").maxBodySize(0).get();
+                Elements elements = doc.getElementsByTag("body");
+                Gson gson = new Gson();
+                ReturnUtils.returnInfo(true, toJson?gson.fromJson(elements.get(0).html(), listener.getTClass()):(T)elements.get(0).html(), listener);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    /**
+     * 发送get请求
      */
     public <T> void getHttpsInfo(String urlStr, HttpResponseListener<T> mResponseListener) {
         JavaBeanRequest<T> request = new JavaBeanRequest<T>(urlStr, mResponseListener.getTClass());
+        request(!urlStr.startsWith(Utils.ACUTEANGLE_URI),1, request, mResponseListener);
+    }
+
+    /**
+     * 发送post请求
+     */
+    public <T> void postHttpsInfo(String urlStr, Map<String, String> postValues, HttpResponseListener<T> mResponseListener) {
+        JavaBeanRequest<T> request = new JavaBeanRequest<T>(urlStr, RequestMethod.POST, mResponseListener.getTClass());
+        Set iterator = postValues.keySet();
+        for(Object key:iterator){
+            Object value = postValues.get(key);
+            request.add((String)key, (String)value);
+        }
         request(!urlStr.startsWith(Utils.ACUTEANGLE_URI),1, request, mResponseListener);
     }
 

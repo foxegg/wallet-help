@@ -33,9 +33,9 @@ public class RequestManager {
         mDownloadQueue = NoHttp.newDownloadQueue(1);
     }
 
-    private static long lastRequestTime = new Date().getTime();
+    public static long lastRequestTime = new Date().getTime();
     //客户端发起请求限制最多1秒一次
-    private static int MIN_SNAP = 2000;
+    public static int MIN_SNAP = 3000;
     public <T> void request(boolean needWait, int what, Request<T> request, OnResponseListener<T> listener) {
         if(needWait){
             new Thread(()->{

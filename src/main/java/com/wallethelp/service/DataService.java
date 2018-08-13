@@ -2,6 +2,7 @@ package com.wallethelp.service;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.wallethelp.domain.BtcReturn;
 import com.wallethelp.domain.CoinExchangeObject;
 import com.wallethelp.domain.CoinPrice;
@@ -9,8 +10,11 @@ import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
 import com.wallethelp.domain.SelfObjectReturn;
 import com.wallethelp.utils.HttpResponseListener;
+import com.wallethelp.utils.JavaBeanRequest;
+import com.wallethelp.utils.RequestManager;
 import com.wallethelp.utils.ReturnUtils;
 import com.wallethelp.utils.Utils;
+import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 
 import org.jsoup.Jsoup;
@@ -18,6 +22,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataService {
 	//*************以太方************************************************************************************************
@@ -133,7 +140,7 @@ public class DataService {
 		String urlStr = Utils.BCH_URL +"/address/"+address+"/unspent"
 				+"?page=" + page
 				+"&pagesize=" + offset;
-		Utils.instance.getHttpsInfo(urlStr, listener);
+		Utils.instance.getHttpsInfoFromJsoup(true, urlStr, listener);
 	}
 
     /**
@@ -209,20 +216,28 @@ public class DataService {
 
 	public void getRawhex(String hash, HttpResponseListener<String> listener) {
 		String urlStr = Utils.BTC_RAWHEX_URL+ "/"+hash+".rawhex";
+		Utils.instance.getHttpsInfoFromJsoup(false, urlStr, listener);
+	}
 
-		new Thread(){
-			@Override
-			public void run() {
-				super.run();
-				Document doc = null;
-				try {
-					doc = Jsoup.connect(urlStr).timeout(5000).userAgent("Mozilla").maxBodySize(0).get();
-					Elements elements = doc.getElementsByTag("body");
-					ReturnUtils.returnInfo(true, elements.get(0).html(), listener);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}.start();
+	/**
+	 * 向全网广播您的交易
+	 */
+	public void btcTxPublish(String rawhex, HttpResponseListener<String> httpListener) {
+		String urlStr = Utils.BTC_URL+"/tools/tx-publish";
+		Map<String, String> postValues = new HashMap<>();
+		postValues.put("rawhex", rawhex);
+		Utils.instance.postHttpsInfo(urlStr, postValues, httpListener);
+	}
+
+	/**
+	 * 向全网广播您的交易
+	 */
+	public void ethTxPublish(String hex, HttpResponseListener<String> httpListener) {
+		String urlStr = Utils.ETH_URL+"/tools/tx-publish";
+		Map<String, String> postValues = new HashMap<>();
+		postValues.put("module", "proxy");
+		postValues.put("action", "eth_sendRawTransaction");
+		postValues.put("hex", hex);
+		Utils.instance.postHttpsInfo(urlStr, postValues, httpListener);
 	}
 }

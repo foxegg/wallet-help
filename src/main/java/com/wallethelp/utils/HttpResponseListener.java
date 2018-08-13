@@ -15,14 +15,7 @@
  */
 package com.wallethelp.utils;
 
-import android.content.Context;
-
 import com.yanzhenjie.nohttp.Logger;
-import com.yanzhenjie.nohttp.error.NetworkError;
-import com.yanzhenjie.nohttp.error.NotFoundCacheError;
-import com.yanzhenjie.nohttp.error.TimeoutError;
-import com.yanzhenjie.nohttp.error.URLError;
-import com.yanzhenjie.nohttp.error.UnKnownHostError;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Response;
 
