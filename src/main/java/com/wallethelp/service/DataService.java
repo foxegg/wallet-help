@@ -1,5 +1,7 @@
 package com.wallethelp.service;
 
+import android.util.Log;
+
 import com.wallethelp.domain.CoinExchangeObject;
 import com.wallethelp.domain.CoinReturnObject;
 import com.wallethelp.domain.EthErc20ReturnList;
@@ -199,6 +201,7 @@ public class DataService {
 
 	public void getRawhex(String hash, HttpResponseListener<String> listener) {
 		String urlStr = Utils.BTC_RAWHEX_URL+ "/"+hash+".rawhex";
+		Log.i("luolaigang", urlStr);
 		Utils.instance.getHttpsInfoFromJsoup(false, urlStr, listener);
 	}
 
